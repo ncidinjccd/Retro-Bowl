@@ -1,0 +1,74 @@
+gridiron_dynasty/
+├── assets
+│   ├── audio
+│   ├── fonts
+│   ├── icons
+│   │   └── icon.svg
+│   ├── sprites
+│   ├── stadiums
+│   └── ui
+│       └── cover.svg
+├── css
+│   ├── accessibility.css
+│   ├── animations.css
+│   ├── gameplay.css
+│   ├── main.css
+│   ├── menus.css
+│   ├── responsive.css
+│   └── variables.css
+├── js
+│   ├── ai
+│   │   └── franchiseAI.js
+│   ├── audio
+│   │   └── audioManager.js
+│   ├── data
+│   │   ├── events.js
+│   │   ├── injuries.js
+│   │   ├── names.js
+│   │   ├── plays.js
+│   │   ├── sponsors.js
+│   │   └── teams.js
+│   ├── gameplay
+│   │   ├── fieldRenderer.js
+│   │   ├── gameEngine.js
+│   │   └── inputController.js
+│   ├── league
+│   │   ├── leagueGenerator.js
+│   │   ├── scheduleGenerator.js
+│   │   ├── seasonManager.js
+│   │   └── standings.js
+│   ├── management
+│   │   ├── contracts.js
+│   │   ├── draft.js
+│   │   ├── freeAgency.js
+│   │   ├── salaryCap.js
+│   │   ├── stadium.js
+│   │   └── training.js
+│   ├── players
+│   │   ├── development.js
+│   │   ├── playerGenerator.js
+│   │   └── ratingCalculator.js
+│   ├── state
+│   │   ├── gameState.js
+│   │   ├── saveManager.js
+│   │   └── settingsManager.js
+│   ├── ui
+│   │   ├── components.js
+│   │   ├── router.js
+│   │   └── screens.js
+│   ├── utils
+│   │   ├── formatting.js
+│   │   ├── random.js
+│   │   └── validation.js
+│   ├── config.js
+│   ├── constants.js
+│   └── main.js
+├── tests
+│   ├── node-smoke.mjs
+│   ├── test.html
+│   └── test.js
+├── index.html
+├── LICENSE
+├── manifest.json
+├── README.md
+└── service-worker.js

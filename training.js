@@ -1,0 +1,2 @@
+import {TRAINING_FOCI} from '../constants.js';
+export function setTrainingFocus(state,focus){if(!TRAINING_FOCI.includes(focus))throw new Error('Invalid training focus');state.trainingFocus=focus;const team=state.league.teams.find(t=>t.id===state.userTeamId);for(const p of team.roster){p.fitness=Math.max(55,p.fitness-(focus==='Recovery'?-8:3));p.morale=Math.min(99,p.morale+(focus==='Chemistry'?3:0));}return focus;}

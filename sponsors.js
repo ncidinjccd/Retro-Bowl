@@ -1,0 +1,2 @@
+const industries=['Energy','Airline','Tech','Sportswear','Banking','Food','Automotive','Telecom','Insurance','Media','Fitness','Travel','Gaming','Logistics','Construction','Beverage','Healthcare','Retail','Security','Hospitality'];
+export const SPONSORS=industries.map((industry,i)=>({id:`sponsor-${i+1}`,name:`${['Apex','Nova','Summit','Vertex','Pulse'][i%5]} ${industry}`,industry,base:4+(i%8),winBonus:.2+(i%5)*.1,playoffBonus:2+(i%6),goal:['Win 7 games','Reach playoffs','Top 8 offense','Grow fan base'][i%4]}));

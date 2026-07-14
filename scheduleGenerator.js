@@ -1,0 +1,3 @@
+import {shuffle} from '../utils/random.js';
+import {REGULAR_SEASON_WEEKS} from '../config.js';
+export function generateSchedule(teams){const ids=teams.map(t=>t.id);const schedule=[];let rotation=[...ids];for(let week=1;week<=REGULAR_SEASON_WEEKS;week++){rotation=shuffle(rotation);const used=new Set();for(const home of rotation){if(used.has(home))continue;const candidates=rotation.filter(id=>id!==home&&!used.has(id));if(!candidates.length)continue;const away=candidates[0];used.add(home);used.add(away);schedule.push({id:`s${week}-${home}-${away}`,week,homeTeamId:week%2?home:away,awayTeamId:week%2?away:home,played:false,homeScore:null,awayScore:null,weather:null});}}return schedule;}

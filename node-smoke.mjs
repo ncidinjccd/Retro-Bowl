@@ -1,0 +1,13 @@
+const store=new Map();
+globalThis.localStorage={getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,String(value)),removeItem:key=>store.delete(key)};
+const {createNewGame}=await import('../js/state/gameState.js');
+const {saveGame,loadGame}=await import('../js/state/saveManager.js');
+const {getCurrentGame,completeUserGame}=await import('../js/league/seasonManager.js');
+const state=createNewGame('team-1',1);
+if(state.league.teams.length!==24)throw new Error('Team count failed');
+if(state.league.teams.flatMap(t=>t.roster).length!==1272)throw new Error('Player count failed');
+saveGame(state,1);
+if(!loadGame(1))throw new Error('Save/load failed');
+completeUserGame(state,getCurrentGame(state),24,17,{home:{yards:320,passYards:210,rushYards:110},away:{yards:275,passYards:180,rushYards:95}});
+if(state.league.week!==2)throw new Error('Week advance failed');
+console.log('All Node smoke tests passed.');

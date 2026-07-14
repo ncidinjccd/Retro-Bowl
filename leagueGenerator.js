@@ -1,0 +1,7 @@
+import {TEAM_DEFINITIONS} from '../data/teams.js';
+import {generateRoster} from '../players/playerGenerator.js';
+import {SPONSORS} from '../data/sponsors.js';
+import {pick,randomInt} from '../utils/random.js';
+import {SALARY_CAP} from '../config.js';
+export function generateLeague(){const teams=TEAM_DEFINITIONS.map(def=>({...structuredClone(def),wins:0,losses:0,ties:0,pointsFor:0,pointsAgainst:0,roster:generateRoster(def.id),staff:createStaff(),finances:{cash:def.budget,revenue:0,expenses:0,stadiumLevel:1,trainingLevel:1,medicalLevel:1},sponsor:structuredClone(pick(SPONSORS)),cap:SALARY_CAP,news:[],history:{championships:0,playoffApps:0}}));for(const t of teams)t.rivals=teams.filter(x=>x.division===t.division&&x.id!==t.id).slice(0,2).map(x=>x.id);return{teams,season:1,week:1,phase:'regular',history:[],records:[],hallOfFame:[],awards:[],freeAgents:[]};}
+function createStaff(){return{headCoach:{name:`Coach ${randomInt(100,999)}`,overall:randomInt(58,89),offense:randomInt(50,92),defense:randomInt(50,92),development:randomInt(50,92),adaptability:randomInt(50,92),salary:randomInt(3,8)},offensiveCoordinator:{name:`OC ${randomInt(100,999)}`,overall:randomInt(55,88)},defensiveCoordinator:{name:`DC ${randomInt(100,999)}`,overall:randomInt(55,88)},headScout:{name:`Scout ${randomInt(100,999)}`,overall:randomInt(55,90)},medical:{name:`Dr. ${randomInt(100,999)}`,overall:randomInt(55,90)}};}

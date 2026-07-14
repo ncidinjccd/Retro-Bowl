@@ -1,0 +1,4 @@
+import {clamp} from './random.js';
+export function validateRating(value){const n=Number(value);return Number.isFinite(n)?Math.round(clamp(n,40,99)):40;}
+export function sanitizeText(value,max=40){return String(value??'').replace(/[<>]/g,'').trim().slice(0,max);}
+export function validateSave(data){if(!data||typeof data!=='object')throw new Error('Invalid save data.');if(!data.league||!Array.isArray(data.league.teams))throw new Error('Save has no league.');if(!data.userTeamId)throw new Error('Save has no user team.');const ids=new Set();for(const team of data.league.teams){if(ids.has(team.id))throw new Error('Duplicate team ID.');ids.add(team.id);if(!Array.isArray(team.roster))throw new Error('Invalid roster.');for(const p of team.roster){p.overall=validateRating(p.overall);p.potential=validateRating(p.potential);}}return data;}

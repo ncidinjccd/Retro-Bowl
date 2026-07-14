@@ -1,0 +1,4 @@
+import {randomInt} from '../utils/random.js';
+function strength(team){const starters=['QB','RB','WR','TE','OT','OG','C','DE','DT','LB','CB','S'];const vals=starters.map(pos=>team.roster.filter(p=>p.position===pos).sort((a,b)=>b.overall-a.overall)[0]?.overall||55);return vals.reduce((a,b)=>a+b,0)/vals.length+(team.staff.headCoach.overall-70)*.12;}
+export function simulateGame(league,homeId,awayId){const h=league.teams.find(t=>t.id===homeId),a=league.teams.find(t=>t.id===awayId);const hs=strength(h)+2,as=strength(a);const baseH=20+(hs-as)*.45+randomInt(-10,12),baseA=19+(as-hs)*.45+randomInt(-10,12);return{home:Math.max(3,Math.round(baseH)),away:Math.max(3,Math.round(baseA))};}
+export function tradeValue(player){return Math.round(player.overall*1.5+player.potential*.8-player.age*.9-player.salary*.8-(player.injury?10:0));}

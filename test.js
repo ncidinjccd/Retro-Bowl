@@ -1,0 +1,20 @@
+import {calculateOverall} from '../js/players/ratingCalculator.js';
+import {generateRoster} from '../js/players/playerGenerator.js';
+import {generateLeague} from '../js/league/leagueGenerator.js';
+import {generateSchedule} from '../js/league/scheduleGenerator.js';
+import {simulateGame} from '../js/ai/franchiseAI.js';
+import {validateSave} from '../js/utils/validation.js';
+const results=[];function test(name,fn){try{fn();results.push({name,ok:true})}catch(e){results.push({name,ok:false,error:e.message})}}function assert(v,msg='Assertion failed'){if(!v)throw new Error(msg)}
+test('Overall is clamped to 40–99',()=>{assert(calculateOverall('QB',{shortAccuracy:500,mediumAccuracy:500,deepAccuracy:500,throwPower:500,awareness:500,decisionMaking:500,pressureResistance:500})===99);assert(calculateOverall('QB',{})>=40)});
+test('Roster contains exactly 53 players',()=>assert(generateRoster('x').length===53));
+const league=generateLeague();
+test('League contains 24 teams',()=>assert(league.teams.length===24));
+test('League contains 1,272 active players',()=>assert(league.teams.flatMap(t=>t.roster).length===1272));
+test('All player ratings are valid',()=>assert(league.teams.flatMap(t=>t.roster).every(p=>p.overall>=40&&p.overall<=99&&p.potential>=40&&p.potential<=99)));
+test('Player IDs are unique',()=>{const ids=league.teams.flatMap(t=>t.roster).map(p=>p.id);assert(ids.length===new Set(ids).size)});
+const schedule=generateSchedule(league.teams);
+test('Each schedule game has different teams',()=>assert(schedule.every(g=>g.homeTeamId!==g.awayTeamId)));
+test('No team plays twice in a week',()=>{for(let w=1;w<=12;w++){const ids=schedule.filter(g=>g.week===w).flatMap(g=>[g.homeTeamId,g.awayTeamId]);assert(ids.length===new Set(ids).size)}});
+test('AI simulation returns valid score',()=>{const r=simulateGame(league,league.teams[0].id,league.teams[1].id);assert(Number.isInteger(r.home)&&Number.isInteger(r.away)&&r.home>=0&&r.away>=0)});
+test('Save validation accepts a valid structure',()=>assert(validateSave({league,userTeamId:league.teams[0].id})!==null));
+document.querySelector('#out').innerHTML=results.map(r=>`<span class="${r.ok?'pass':'fail'}">${r.ok?'PASS':'FAIL'} — ${r.name}${r.error?`: ${r.error}`:''}</span>`).join('\n');

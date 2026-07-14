@@ -1,0 +1,3 @@
+const templates=['{player} delivered a breakout performance.','{team} supporters are demanding a stronger finish.','A sponsor praised {team} for its community work.','{player} requested a larger role.','Analysts moved {team} up the power rankings.','A storm is expected for the next home game.','{player} impressed coaches during film study.','Ticket demand increased after the latest win.','A rival coach questioned {team}\'s toughness.','The medical staff cleared {player} for full practice.'];
+export const NEWS_TEMPLATES=Array.from({length:100},(_,i)=>`${templates[i%templates.length]} [Report ${i+1}]`);
+export const RANDOM_EVENTS=Array.from({length:75},(_,i)=>({id:`event-${i+1}`,title:`League Event ${i+1}`,effect:['morale','money','fitness','fans'][i%4],amount:(i%9)-4}));
